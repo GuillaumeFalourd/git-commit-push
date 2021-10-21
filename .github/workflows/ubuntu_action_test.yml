@@ -24,7 +24,7 @@ jobs:
           email: ${{ github.actor }}[bot]@users.noreply.github.com
           name: ${{ github.actor }}
           commit_message: ubuntu full workflow
-          target_branch: ${{ github.ref }}
+          target_branch: ubuntu
           files: reports/ubuntu_report_2.txt
           remote_repository: origin
           access_token: ${{ github.token }}

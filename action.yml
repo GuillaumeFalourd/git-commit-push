@@ -4,31 +4,31 @@ description: 'GitHub Action to commit & push changes made in workflows to upstre
 
 inputs:
   email:
-    description: The committer's email address
+    description: Committer's email address
     required: true
     default: ${{ github.actor }}@users.noreply.github.com
   name:
-    description: The committer's name
+    description: Committer's username
     required: true
     default: ${{ github.actor }}
   commit_message:
-    description: The commit message
+    description: Commit message
     required: true
-    default: Automatically updated using GitHub Actions
+    default: Automatically updated using Push and Commit action
   target_branch:
-    description: The branch to push the changes back to
+    description: Branch to push the changes back to
     required: true
     default: ${{ github.ref }}
   files:
-    description: The files to add separated by space
+    description: Files to add separated by space
     required: true
     default: .
   remote_repository:
-    description: The repository to push the code to
+    description: Repository to push the code to
     required: true
     default: origin
   access_token:
-    description: The token used to push the code
+    description: Token used to push the code
     required: true
     default: ${{ github.token }}
   force:

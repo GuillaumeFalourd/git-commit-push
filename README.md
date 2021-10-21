@@ -64,9 +64,9 @@ Field | Mandatory | Default Value | Observation
 **files** | NO | `.` | Files to add separated by space <br/> _e.g: `file1 file2 directory1 directory2/file3`_
 **remote_repository** | NO | `origin` | Repository to push the code
 **access_token** | NO | `${{ github.token }}` | [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) is necessary if push to another repository
-**force** | NO | | Whether to perform force push
-**empty** | NO | | Whether to allow empty commit
-**tags** | NO | | Whether to use --tags
+**force** | NO | `0` | Whether to perform force push
+**empty** | NO | `0` | Whether to allow empty commit
+**tags** | NO | `0` | Whether to use --tags
 
 * * *
 

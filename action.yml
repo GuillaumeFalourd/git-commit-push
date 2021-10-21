@@ -1,0 +1,97 @@
+name: 'Push and Commit action'
+
+description: 'GitHub Action to commit & push changes made in workflows to upstream repository :octocat:'
+
+inputs:
+  email:
+    description: The committer's email address
+    required: true
+    default: ${{ github.actor }}@users.noreply.github.com
+  name:
+    description: The committer's name
+    required: true
+    default: ${{ github.actor }}
+  commit_message:
+    description: The commit message
+    required: true
+    default: Automatically updated using GitHub Actions
+  target_branch:
+    description: The branch to push the changes back to, defaults to the current branch
+    required: true
+    default: ${{ github.ref }}
+  files:
+    description: The files to add separated by space, defaults to every file
+    required: true
+    default: .
+  remote_repository:
+    description: The repository to push the code to, defaults to origin (e.g. this repository)
+    required: true
+    default: origin
+  access_token:
+    description: The token used to push the code, not needed if you push to the same repository
+    required: true
+    default: ${{ github.token }}
+  force:
+    description: Whether to perform force push
+    required: true
+    default: '0'
+  empty:
+    description: 'Allow empty commit'
+    required: false
+    default: '0'
+  tags:
+    description: 'Determines if --tags is used'
+    required: false
+    default: '0'
+
+outputs:
+  diff-output:
+    description: "Assert output"
+    value: ${{ steps.assert.outputs.result }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Git push and commit
+      run: |
+        CURRENT_BRANCH=${GITHUB_REF##*/}
+        TARGET_BRANCH=${{ inputs.target_branch }}
+        case $TARGET_BRANCH in "refs/heads/"*)
+            TARGET_BRANCH=$(echo "$TARGET_BRANCH" | sed "s@refs/heads/@@")
+        esac
+
+        if [ "${{ inputs.force }}" != "0" ]; then
+            FORCE='--force'
+        fi
+        if [ "${{ inputs.empty }}" != "0" ]; then
+            EMPTY='--allow-empty'
+        fi
+        if [ "${{ inputs.tags }}" != "0" ]; then
+            TAGS='--tags'
+        fi
+
+        echo "machine github.com" > "$HOME/.netrc"
+        echo "  login $GITHUB_ACTOR" >> "$HOME/.netrc"
+        echo "  password ${{ inputs.access_token }}" >> "$HOME/.netrc"
+
+        echo "machine api.github.com" >> "$HOME/.netrc"
+        echo "  login $GITHUB_ACTOR" >> "$HOME/.netrc"
+        echo "  password ${{ inputs.access_token }}" >> "$HOME/.netrc"
+
+        git config --local user.email "${{ inputs.email }}"
+        git config --local user.name "${{ inputs.name }}"
+        git add ${{ inputs.files }} -v
+        git commit -m "${{ inputs.commit_message }}" $EMPTY
+
+        git branch push-and-commit-action
+        git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
+        git checkout "$CURRENT_BRANCH"
+        git merge push-and-commit-action
+        git branch -d push-and-commit-action
+
+        git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
+      shell: bash
+
+branding:
+    icon: 'git-commit'
+    color: 'black'

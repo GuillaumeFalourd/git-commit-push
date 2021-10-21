@@ -59,7 +59,7 @@ Field | Mandatory | Default Value | Observation
 ------------ | ------------  | ------------- | -------------
 **email** | NO | `${{ github.actor }}@users.noreply.github.com` | Github user email <br/> _e.g: `octocat@github.com`_
 **name** | NO | `${{ github.actor }}` | Github username <br/> _e.g: `octocat`_
-**commit_message** | NO | | Commit message
+**commit_message** | NO | `Commit performed using Push and Commit action` | Commit message
 **target_branch** | NO | `${{ github.ref }}` | Branch to push the changes back
 **files** | NO | `.` | Files to add separated by space <br/> _e.g: `file1 file2 directory1 directory2/file3`_
 **remote_repository** | NO | `origin` | Repository to push the code

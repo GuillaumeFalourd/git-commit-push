@@ -14,7 +14,7 @@ inputs:
   commit_message:
     description: Commit message
     required: true
-    default: Automatically updated using Push and Commit action
+    default: Commit performed using Push and Commit action
   target_branch:
     description: Branch to push the changes back to
     required: true

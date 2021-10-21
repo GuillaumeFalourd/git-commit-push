@@ -1,31 +1,31 @@
-name: Action test on Ubuntu
+name: Action test on MacOS
 
 on:
   schedule:
-    - cron: "0 2 * * *" # Runs at 02:00 UTC everyday
+    - cron: "0 4 * * *" # Runs at 04:00 UTC everyday
   push:
   workflow_dispatch:
 
 jobs:
-  ubuntu-minimal:
-    runs-on: ubuntu-latest
+  macos-minimal:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - run: date > reports/ubuntu_report_minimal.txt
+      - run: date > reports/macos_report_minimal.txt
       - uses: GuillaumeFalourd/git-commit-push@main
 
-  ubuntu-full:
-    runs-on: ubuntu-latest
+  macos-full:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - run: date > reports/ubuntu_report_full.txt
+      - run: date > reports/macos_report_full.txt
       - uses: GuillaumeFalourd/git-commit-push@main
         with:
           email: ${{ github.actor }}[bot]@users.noreply.github.com
           name: ${{ github.actor }}
-          commit_message: ubuntu full workflow
-          target_branch: ubuntu
-          files: reports/ubuntu_report_full.txt
+          commit_message: macos full workflow
+          target_branch: macos
+          files: reports/macos_report_full.txt
           remote_repository: origin
           access_token: ${{ github.token }}
           force: true

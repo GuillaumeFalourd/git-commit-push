@@ -4,7 +4,9 @@
 
 GitHub Action to commit & push changes made in workflows to upstream repository :octocat:
 
-_Note: This action is supported on all runners operating systems (`ubuntu`, `macos`, `windows`)_
+![1*_UUaozFPd2qHfCFjlhIgGA](https://user-images.githubusercontent.com/22433243/138337129-50e909fa-07b3-4634-bc78-e5d6cb734d95.png)
+
+_Note: This action is supported on **all runners** operating systems (`ubuntu`, `macos`, `windows`)_
 
 * * *
 

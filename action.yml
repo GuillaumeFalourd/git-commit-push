@@ -1,6 +1,6 @@
 name: 'Push and Commit action'
 
-description: 'GitHub Action to commit & push changes made in workflows to upstream repository :octocat:'
+description: 'GitHub Action to commit & push changes made in workflows :octocat:'
 
 inputs:
   email:

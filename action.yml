@@ -24,7 +24,7 @@ inputs:
     required: true
     default: .
   remote_repository:
-    description: Repository to push the code to
+    description: Repository url to push the code to
     required: true
     default: origin
   access_token:

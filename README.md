@@ -2,7 +2,7 @@
 
 [![Action test on Ubuntu](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/ubuntu_action_test.yml/badge.svg)](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/ubuntu_action_test.yml) [![Action test on MacOS](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/macos_action_test.yml/badge.svg)](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/macos_action_test.yml) [![Action test on Windows](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/windows_action_test.yml/badge.svg)](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/windows_action_test.yml)
 
-GitHub Action to commit & push changes made in workflows to upstream repository :octocat:
+GitHub Action to commit & push changes made in workflows :octocat:
 
 <img width="1253" alt="Screenshot 2021-10-21 at 15 40 50" src="https://user-images.githubusercontent.com/22433243/138337505-49e66480-e084-4611-99f3-594023eab19c.png">
 

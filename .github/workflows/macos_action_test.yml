@@ -9,6 +9,7 @@ on:
 jobs:
   macos-minimal:
     runs-on: macos-latest
+    if: github.event_name != 'push'
     steps:
       - uses: actions/checkout@v2.3.4
       - run: date > reports/macos_report_minimal.txt

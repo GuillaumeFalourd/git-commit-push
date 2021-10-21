@@ -6,7 +6,7 @@ GitHub Action to commit & push changes made in workflows to upstream repository 
 
 <img width="1253" alt="Screenshot 2021-10-21 at 15 40 50" src="https://user-images.githubusercontent.com/22433243/138337505-49e66480-e084-4611-99f3-594023eab19c.png">
 
-_Note: This action is supported on **all runners** operating systems (`ubuntu`, `macos`, `windows`)_
+_**Note**: This action is supported on **all runners** operating systems (`ubuntu`, `macos`, `windows`)_
 
 * * *
 

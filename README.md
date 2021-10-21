@@ -1,4 +1,4 @@
-# Push and Commit action
+# Commit and Push action
 
 [![Action test on Ubuntu](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/ubuntu_action_test.yml/badge.svg)](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/ubuntu_action_test.yml) [![Action test on MacOS](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/macos_action_test.yml/badge.svg)](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/macos_action_test.yml) [![Action test on Windows](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/windows_action_test.yml/badge.svg)](https://github.com/GuillaumeFalourd/git-commit-push/actions/workflows/windows_action_test.yml)
 

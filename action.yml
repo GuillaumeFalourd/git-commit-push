@@ -1,4 +1,4 @@
-name: 'Push and Commit action'
+name: 'Commit and Push action'
 
 description: 'GitHub Action to commit & push changes made in workflows :octocat:'
 

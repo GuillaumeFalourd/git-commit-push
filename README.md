@@ -16,13 +16,9 @@ _**Note**: This action is supported on **all runners** operating systems (`ubunt
 
 ⚠️    The [`actions/checkout`](https://github.com/marketplace/actions/checkout) is mandatory to use this action, as it will be necessary to access the repository files.
 
- * * *
+### ♻️ Scenarios
 
-## ♻️ Scenarios
-
-### `1️⃣ Minimal`
-
-#### Commit and Push with `default` parameters
+#### `1️⃣ Minimal`: Commit and Push with `default` parameters
 
 ```yaml
     steps:
@@ -31,9 +27,7 @@ _**Note**: This action is supported on **all runners** operating systems (`ubunt
       - uses: GuillaumeFalourd/git-commit-push@v1
 ```
 
-### `2️⃣ Full`
-
-#### Commit and Push with `customized` parameters
+#### `2️⃣ Full`: Commit and Push with `customized` parameters
 
 ```yaml
     steps:

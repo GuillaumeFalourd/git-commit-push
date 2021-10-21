@@ -7,14 +7,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  minimal:
+  ubuntu-minimal:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
       - run: date > reports/ubuntu_report_1.txt
       - uses: GuillaumeFalourd/git-commit-push@main
 
-  full:
+  ubuntu-full:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4

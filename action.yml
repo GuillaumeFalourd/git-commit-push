@@ -83,11 +83,11 @@ runs:
         git add ${{ inputs.files }} -v
         git commit -m "${{ inputs.commit_message }}" $EMPTY
 
-        git branch push-and-commit-action
+        git branch push-and-commit-action-${{ github.run_id }}
         git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
         git checkout "$CURRENT_BRANCH"
-        git merge push-and-commit-action
-        git branch -d push-and-commit-action
+        git merge push-and-commit-action-${{ github.run_id }}
+        git branch -d push-and-commit-action-${{ github.run_id }}
 
         git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
       shell: bash

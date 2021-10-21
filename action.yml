@@ -16,19 +16,19 @@ inputs:
     required: true
     default: Automatically updated using GitHub Actions
   target_branch:
-    description: The branch to push the changes back to, defaults to the current branch
+    description: The branch to push the changes back to
     required: true
     default: ${{ github.ref }}
   files:
-    description: The files to add separated by space, defaults to every file
+    description: The files to add separated by space
     required: true
     default: .
   remote_repository:
-    description: The repository to push the code to, defaults to origin (e.g. this repository)
+    description: The repository to push the code to
     required: true
     default: origin
   access_token:
-    description: The token used to push the code, not needed if you push to the same repository
+    description: The token used to push the code
     required: true
     default: ${{ github.token }}
   force:
@@ -36,11 +36,11 @@ inputs:
     required: true
     default: '0'
   empty:
-    description: 'Allow empty commit'
+    description: Whether to allow empty commit
     required: false
     default: '0'
   tags:
-    description: 'Determines if --tags is used'
+    description: Whether to use --tags
     required: false
     default: '0'
 

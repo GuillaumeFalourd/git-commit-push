@@ -61,9 +61,9 @@ Field | Mandatory | Default Value | Observation
 **name** | NO | `${{ github.actor }}` | Github username <br/> _e.g: `octocat`_
 **commit_message** | NO | | Commit message
 **target_branch** | NO | `${{ github.ref }}` | Branch to push the changes back
-**files** | NO | `.` (all) | Files to add separated by space <br/> _e.g: `file1 file2 directory1 directory2/file3`_
+**files** | NO | `.` | Files to add separated by space <br/> _e.g: `file1 file2 directory1 directory2/file3`_
 **remote_repository** | NO | `origin` | Repository to push the code
-**access_token** | NO | `${{ github.token }}` | [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) (necessary if push to another repository).
+**access_token** | NO | `${{ github.token }}` | [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) is necessary if push to another repository
 **force** | NO | | Whether to perform force push
 **empty** | NO | | Whether to allow empty commit
 **tags** | NO | | Whether to use --tags

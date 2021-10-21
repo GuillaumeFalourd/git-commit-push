@@ -56,7 +56,7 @@ _Note: This action is supported on all runners operating systems (`ubuntu`, `mac
 ## ▶️ Action Inputs
 
 Field | Mandatory | Default Value | Observation
------------- | ------------  | -------------
+------------ | ------------  | ------------- | -------------
 **email** | NO | `${{ github.actor }}@users.noreply.github.com` | Github user email <br/> _e.g: `octocat@github.com`_
 **name** | NO | `${{ github.actor }}` | Github username <br/> _e.g: `octocat`_
 **commit_message** | NO | | The commit message

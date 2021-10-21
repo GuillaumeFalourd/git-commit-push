@@ -3,6 +3,7 @@ name: Action test on Ubuntu
 on:
   schedule:
     - cron: "0 2 * * *" # Runs at 02:00 UTC everyday
+  push:
   workflow_dispatch:
 
 jobs:

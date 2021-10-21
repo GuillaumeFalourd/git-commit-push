@@ -1,7 +1,7 @@
 name: Action test on Ubuntu
 
 on:
-  scheduled:
+  schedule:
     - cron: "0 2 * * *" # Runs at 02:00 UTC everyday
   workflow_dispatch:
 

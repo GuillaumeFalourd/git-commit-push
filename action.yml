@@ -1,6 +1,6 @@
-name: 'Git Commit Push'
+name: 'Git Commit Push Action'
 
-description: 'GitHub Action to commit & push changes made in workflows :octocat:'
+description: 'GitHub Action to commit & push changes made in workflows (all os supported).'
 
 inputs:
   email:

@@ -55,6 +55,7 @@ runs:
     - name: Git push and commit
       run: |
         CURRENT_BRANCH=${GITHUB_REF##*/}
+        echo $CURRENT_BRANCH
         TARGET_BRANCH=${{ inputs.target_branch }}
         case $TARGET_BRANCH in "refs/heads/"*)
             TARGET_BRANCH=$(echo "$TARGET_BRANCH" | sed "s@refs/heads/@@")

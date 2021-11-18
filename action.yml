@@ -54,8 +54,10 @@ runs:
   steps:
     - name: Git push and commit
       run: |
-        CURRENT_BRANCH=${GITHUB_REF##*/}
-        echo $CURRENT_BRANCH
+        CURRENT_BRANCH=${GITHUB_REF}
+        case $CURRENT_BRANCH in "refs/heads/"*)
+            CURRENT_BRANCH=$(echo "$CURRENT_BRANCH" | sed "s@refs/heads/@@")
+        esac
         TARGET_BRANCH=${{ inputs.target_branch }}
         case $TARGET_BRANCH in "refs/heads/"*)
             TARGET_BRANCH=$(echo "$TARGET_BRANCH" | sed "s@refs/heads/@@")

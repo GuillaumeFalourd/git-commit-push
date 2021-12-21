@@ -32,3 +32,9 @@ jobs:
           force: true
           empty: true
           tags: true
+          
+  ubuntu-nochanges:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: GuillaumeFalourd/git-commit-push@main

@@ -92,7 +92,12 @@ runs:
         git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
         git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}
 
-        git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
+        if [[ `git status --porcelain` ]]; then
+          git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
+        else
+          echo "No changes"
+        fi
+
       shell: bash
 
 branding:

@@ -97,7 +97,7 @@ runs:
           git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
         
         else
-          echo "No changes"
+          echo "WARNING: No changes were detected. git commit push action aborted."
         fi
 
       shell: bash

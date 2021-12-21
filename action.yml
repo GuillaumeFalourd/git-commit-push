@@ -83,17 +83,19 @@ runs:
 
         git config --local user.email "${{ inputs.email }}"
         git config --local user.name "${{ inputs.name }}"
-        git add ${{ inputs.files }} -v
-        git commit -m "${{ inputs.commit_message }}" $EMPTY
-
-        git branch push-and-commit-action-${{ github.run_id }}-${{ github.job }}
-        git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
-        git checkout "$CURRENT_BRANCH"
-        git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
-        git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}
-
+        
         if [[ `git status --porcelain` ]]; then
+          git add ${{ inputs.files }} -v
+          git commit -m "${{ inputs.commit_message }}" $EMPTY
+
+          git branch push-and-commit-action-${{ github.run_id }}-${{ github.job }}
+          git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
+          git checkout "$CURRENT_BRANCH"
+          git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
+          git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}
+
           git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
+        
         else
           echo "No changes"
         fi

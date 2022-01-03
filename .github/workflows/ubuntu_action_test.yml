@@ -2,7 +2,7 @@ name: Action test on Ubuntu
 
 on:
   schedule:
-    - cron: "0 2 * * *" # Runs at 02:00 UTC everyday
+    - cron: "0 2 * * MON-FRI" # Runs at 02:00 UTC
   push:
   workflow_dispatch:
 
@@ -32,7 +32,7 @@ jobs:
           force: true
           empty: true
           tags: true
-          
+
   ubuntu-nochanges:
     runs-on: ubuntu-latest
     steps:

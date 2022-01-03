@@ -2,7 +2,7 @@ name: Action test on Windows
 
 on:
   schedule:
-    - cron: "0 6 * * *" # Runs at 06:00 UTC everyday
+    - cron: "0 6 * * MON-FRI" # Runs at 06:00 UTC
   push:
   workflow_dispatch:
 

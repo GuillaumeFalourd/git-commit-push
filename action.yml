@@ -85,10 +85,6 @@ runs:
         git config --local user.name "${{ inputs.name }}"
         
         if [[ `git status --porcelain` ]]; then
-          git add ${{ inputs.files }} -v
-          git commit -m "${{ inputs.commit_message }}" $EMPTY
-
-
           REGEX="^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$"
           if [[ ${{ inputs.remote_repository }} =~ $REGEX ]]; then
             PROTOCOL=${BASH_REMATCH[1]}
@@ -99,8 +95,11 @@ runs:
             DESTINATION_REPOSITORY=${DESTINATION_REPOSITORY//.git/ }
             REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
             git remote set-url origin $REMOTE_URL
+            git fetch origin
           fi
 
+          git add ${{ inputs.files }} -v
+          git commit -m "${{ inputs.commit_message }}" $EMPTY
           git branch push-and-commit-action-${{ github.run_id }}-${{ github.job }}
           git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
           git checkout "$CURRENT_BRANCH"

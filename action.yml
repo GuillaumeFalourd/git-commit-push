@@ -94,6 +94,8 @@ runs:
             DESTINATION_REPOSITORY=${BASH_REMATCH[5]}
             DESTINATION_REPOSITORY=${DESTINATION_REPOSITORY//.git/ }
             REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
+            git remote set-url origin $REMOTE_URL
+            git fetch origin
           fi
 
           git add ${{ inputs.files }} -v
@@ -104,7 +106,7 @@ runs:
           git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
           git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}
 
-          git push "$REMOTE_URL" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
+          git push origin "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
         
         else
           echo "WARNING: No changes were detected. git commit push action aborted."

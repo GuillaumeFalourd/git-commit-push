@@ -94,14 +94,12 @@ runs:
             DESTINATION_REPOSITORY=${BASH_REMATCH[5]}
             DESTINATION_REPOSITORY=${DESTINATION_REPOSITORY//.git/ }
             REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
-            git remote set-url origin $REMOTE_URL
-            git fetch origin
           fi
 
           git add ${{ inputs.files }} -v
           git commit -m "${{ inputs.commit_message }}" $EMPTY
           git branch push-and-commit-action-${{ github.run_id }}-${{ github.job }}
-          git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
+          git fetch "$REMOTE_URL" "$CURRENT_BRANCH"
           git checkout "$CURRENT_BRANCH"
           git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
           git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}

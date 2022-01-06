@@ -88,13 +88,26 @@ runs:
           git add ${{ inputs.files }} -v
           git commit -m "${{ inputs.commit_message }}" $EMPTY
 
+
+          REGEX="^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$"
+          if [[ ${{ inputs.remote_repository }} =~ $REGEX ]]; then
+            PROTOCOL=${BASH_REMATCH[1]}
+            SEPARATOR=${BASH_REMATCH[2]}
+            HOSTNAME=${BASH_REMATCH[3]}
+            DESTINATION_OWNER=${BASH_REMATCH[4]}
+            DESTINATION_REPOSITORY=${BASH_REMATCH[5]}
+            DESTINATION_REPOSITORY=${DESTINATION_REPOSITORY//.git/ }
+            REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
+            git remote set-url origin $REMOTE_URL
+          fi
+
           git branch push-and-commit-action-${{ github.run_id }}-${{ github.job }}
           git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
           git checkout "$CURRENT_BRANCH"
           git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
           git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}
 
-          git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
+          git push "$REMOTE_URL" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS
         
         else
           echo "WARNING: No changes were detected. git commit push action aborted."

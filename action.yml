@@ -132,12 +132,7 @@ runs:
 
             echo
             echo "##### Copying contents to destination Github repository #####"
-            if [ -z "${{ inputs.target_dir }}" ]; then
-              cp -rvf "${{ inputs.source_files }}" "$CLONE_DIRECTORY"
-            else
-              mkdir -p "$CLONE_DIRECTORY/${{ inputs.target_dir }}"
-              cp -rvf "${{ inputs.source_files }}" "$CLONE_DIRECTORY/${{ inputs.target_dir }}"
-            fi
+            cp -rvf "${{ inputs.files }}" "$CLONE_DIRECTORY"
 
             cd "$CLONE_DIRECTORY"
 

@@ -138,6 +138,10 @@ runs:
             REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
             git remote set-url origin $REMOTE_URL
             git fetch origin
+            git ls-remote --heads origin ${{ inputs.target_branch }} | wc -l
+            if [ "$?" != "1" ]; then
+              git checkout -b ${{ inputs.target_branch }}
+            fi
             git checkout ${{ inputs.target_branch }}
             git add .
             git status

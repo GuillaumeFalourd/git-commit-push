@@ -53,8 +53,9 @@ runs:
   using: "composite"
   steps:
     - name: Git push and commit origin
-      if: ${{ inputs.remote_repository }} == 'origin'
+      if: ${{ inputs.remote_repository == 'origin' }}
       run: |
+        echo "##### Git Push and Commit ORIGIN #####"
         CURRENT_BRANCH=${GITHUB_REF}
         case $CURRENT_BRANCH in "refs/heads/"*)
             CURRENT_BRANCH=$(echo "$CURRENT_BRANCH" | sed "s@refs/heads/@@")
@@ -101,8 +102,9 @@ runs:
       shell: bash
 
     - name: Git push and commit remote
-      if: ${{ inputs.remote_repository }} != 'origin'
+      if: ${{ inputs.remote_repository != 'origin' }}
       run: |
+        echo "##### Git Push and Commit REMOTE #####"
         if [ -z "${{ inputs.access_token }}" ]; then
           echo "WARNING: The access_token input is mandatory to push files to another repository."
           exit 1

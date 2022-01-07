@@ -91,7 +91,7 @@ runs:
           git branch push-and-commit-action-${{ github.run_id }}-${{ github.job }}
           git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
           git checkout "$CURRENT_BRANCH"
-          git merge -X ours push-and-commit-action-${{ github.run_id }}-${{ github.job }}
+          git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
           git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}
 
           git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS        
@@ -134,10 +134,21 @@ runs:
 
             cd "$CLONE_DIRECTORY"
 
-            # Create new branch
-            REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
+                        REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
             git remote set-url origin $REMOTE_URL
             git fetch origin
+
+            if [ -z "${{ inputs.target_dir }}" ]; then
+              git add ${{ inputs.source_files }}
+            else
+              git add ${{ inputs.target_dir }}/${{ inputs.source_files }}
+            fi
+            # Won't commit if no changes were made
+            git diff-index --quiet HEAD || git commit --message "${{ inputs.commit_message }}"
+            git status
+            git branch copy-push-files-action-${{ github.run_id }}-${{ github.job }}
+
+            # Create new branch (if necessary)
             BE=$(git ls-remote --heads origin ${{ inputs.target_branch }} | wc -l)
             if [[ $BE == *"0"* ]]; then
               echo "##### Target branch doesn't exist. Creating new branch #####"
@@ -145,15 +156,11 @@ runs:
             else
               git checkout ${{ inputs.target_branch }}
             fi
-            git add .
-            git status
-
-            # Won't commit if no changes were made
-            git diff-index --quiet HEAD || git commit --message "${{ inputs.commit_message }}"
+            git merge -X theirs copy-push-files-action-${{ github.run_id }}-${{ github.job }}
+            git branch -d copy-push-files-action-${{ github.run_id }}-${{ github.job }}
 
             echo
             echo "##### Pushing git commit #####"
-            # --set-upstream: sets the branch when pushing to a branch that does not exist
             git push -f -u origin "${{ inputs.target_branch }}"
 
         else

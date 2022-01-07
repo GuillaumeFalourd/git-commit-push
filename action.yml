@@ -134,15 +134,12 @@ runs:
 
             cd "$CLONE_DIRECTORY"
 
-                        REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
+            REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
             git remote set-url origin $REMOTE_URL
             git fetch origin
 
-            if [ -z "${{ inputs.target_dir }}" ]; then
-              git add ${{ inputs.source_files }}
-            else
-              git add ${{ inputs.target_dir }}/${{ inputs.source_files }}
-            fi
+            git add ${{ inputs.files }}
+
             # Won't commit if no changes were made
             git diff-index --quiet HEAD || git commit --message "${{ inputs.commit_message }}"
             git status

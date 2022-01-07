@@ -132,6 +132,7 @@ runs:
 
             echo
             echo "##### Copying contents to destination Github repository #####"
+            ls -lha
             cp "${{ inputs.files }}" "$CLONE_DIRECTORY"
 
             cd "$CLONE_DIRECTORY"

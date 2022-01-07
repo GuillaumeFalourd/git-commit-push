@@ -116,7 +116,9 @@ runs:
             HOSTNAME=${BASH_REMATCH[3]}
             DESTINATION_OWNER=${BASH_REMATCH[4]}
             DESTINATION_REPOSITORY=${BASH_REMATCH[5]}
-            DESTINATION_REPOSITORY=${DESTINATION_REPOSITORY//.git/ }
+            if [[ $DESTINATION_REPOSITORY == *'.git'* ]] && [[ $DESTINATION_REPOSITORY != *'.github.io'* ]]; then
+              DESTINATION_REPOSITORY=${DESTINATION_REPOSITORY//.git/ }
+            fi
 
             CLONE_DIRECTORY=$(mktemp -d)
 

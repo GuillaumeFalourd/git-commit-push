@@ -88,11 +88,11 @@ runs:
         if [[ `git status --porcelain` ]]; then
           git add ${{ inputs.files }} -v
           git commit -m "${{ inputs.commit_message }}" $EMPTY
-          git branch push-and-commit-action-${{ github.run_id }}-${{ github.job }}
+          git branch git-commit-push-action-${{ github.run_id }}-${{ github.job }}
           git fetch "${{ inputs.remote_repository }}" "$CURRENT_BRANCH"
           git checkout "$CURRENT_BRANCH"
-          git merge push-and-commit-action-${{ github.run_id }}-${{ github.job }}
-          git branch -d push-and-commit-action-${{ github.run_id }}-${{ github.job }}
+          git merge git-commit-push-action-${{ github.run_id }}-${{ github.job }}
+          git branch -d git-commit-push-action-${{ github.run_id }}-${{ github.job }}
 
           git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS        
         else
@@ -148,7 +148,7 @@ runs:
             # Won't commit if no changes were made
             git diff-index --quiet HEAD || git commit --message "${{ inputs.commit_message }}"
             git status
-            git branch copy-push-files-action-${{ github.run_id }}-${{ github.job }}
+            git branch git-commit-push-action-${{ github.run_id }}-${{ github.job }}
 
             # Create new branch (if necessary)
             BE=$(git ls-remote --heads origin ${{ inputs.target_branch }} | wc -l)
@@ -158,8 +158,8 @@ runs:
             else
               git checkout ${{ inputs.target_branch }}
             fi
-            git merge -X theirs copy-push-files-action-${{ github.run_id }}-${{ github.job }}
-            git branch -d copy-push-files-action-${{ github.run_id }}-${{ github.job }}
+            git merge -X theirs git-commit-push-action-${{ github.run_id }}-${{ github.job }}
+            git branch -d git-commit-push-action-${{ github.run_id }}-${{ github.job }}
 
             echo
             echo "##### Pushing git commit #####"

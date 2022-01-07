@@ -46,7 +46,7 @@ jobs:
           target_branch: ubuntu
           files: reports/ubuntu_report_full.txt
           remote_repository: https://github.com/GuillaumeFalourd/poc-github-actions
-          access_token: ${{ github.token }}
+          access_token: ${{ secrets.ACCESS_TOKEN }}
           force: true
           empty: true
           tags: true

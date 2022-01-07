@@ -128,13 +128,16 @@ runs:
             git config --global user.name "${{ inputs.name }}"
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             git clone "https://${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY.git" "$CLONE_DIRECTORY"
-            ls -la "$CLONE_DIRECTORY"
 
             echo
-            echo "##### Copying contents to destination Github repository #####"
-            cp ${{ inputs.files }} $CLONE_DIRECTORY
+            echo "##### Copying contents to remote Github repository #####"
+            echo ""##### Current repo content #####"
+            ls -lha
+            cp -rvf ${{ inputs.files }} $CLONE_DIRECTORY
 
             cd "$CLONE_DIRECTORY"
+            echo ""##### Remote repo content after copying files #####"
+            ls -la "$CLONE_DIRECTORY"
 
             REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
             git remote set-url origin $REMOTE_URL

@@ -24,7 +24,7 @@ _**Note**: This action is supported on **all runners** operating systems (`ubunt
     steps:
       - uses: actions/checkout@v2.3.4
       # [...] --> steps with actions or commands updating repository files
-      - uses: GuillaumeFalourd/git-commit-push@v1.2
+      - uses: GuillaumeFalourd/git-commit-push@v1.3
 ```
 
 ### `2️⃣ Full`: Commit and Push with `customized` parameters
@@ -33,7 +33,7 @@ _**Note**: This action is supported on **all runners** operating systems (`ubunt
     steps:
       - uses: actions/checkout@v2.3.4
       # [...] --> steps with actions or commands updating repository files
-      - uses: GuillaumeFalourd/git-commit-push@v1.2
+      - uses: GuillaumeFalourd/git-commit-push@v1.3
         with:
           email: ${{ github.actor }}@users.noreply.github.com
           name: ${{ github.actor }}

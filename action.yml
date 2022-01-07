@@ -52,7 +52,8 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Git push and commit
+    - name: Git push and commit origin
+      if: ${{ inputs.remote_repository == 'origin' }}
       run: |
         CURRENT_BRANCH=${GITHUB_REF}
         case $CURRENT_BRANCH in "refs/heads/"*)
@@ -83,7 +84,7 @@ runs:
 
         git config --local user.email "${{ inputs.email }}"
         git config --local user.name "${{ inputs.name }}"
-        
+
         if [[ `git status --porcelain` ]]; then
           git add ${{ inputs.files }} -v
           git commit -m "${{ inputs.commit_message }}" $EMPTY
@@ -97,7 +98,77 @@ runs:
         else
           echo "WARNING: No changes were detected. git commit push action aborted."
         fi
+      shell: bash
 
+    - name: Git push and commit remote
+      if: ${{ inputs.remote_repository != 'origin' }}
+      run: |
+        if [ -z "${{ inputs.access_token }}" ]; then
+          echo "WARNING: The access_token input is mandatory to push files to another repository."
+          exit 1
+        fi
+
+        REGEX="^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$"
+
+        if [[ ${{ inputs.remote_repository }} =~ $REGEX ]]; then
+            PROTOCOL=${BASH_REMATCH[1]}
+            SEPARATOR=${BASH_REMATCH[2]}
+            HOSTNAME=${BASH_REMATCH[3]}
+            DESTINATION_OWNER=${BASH_REMATCH[4]}
+            DESTINATION_REPOSITORY=${BASH_REMATCH[5]}
+            DESTINATION_REPOSITORY=${DESTINATION_REPOSITORY//.git/ }
+
+            CLONE_DIRECTORY=$(mktemp -d)
+
+            echo "##### Cloning destination Github repository #####"
+            # Setup git
+            git config --global user.email "${{ inputs.email }}"
+            git config --global user.name "${{ inputs.name }}"
+            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+            git clone "https://${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY.git" "$CLONE_DIRECTORY"
+            ls -la "$CLONE_DIRECTORY"
+
+            echo
+            echo "##### Copying contents to destination Github repository #####"
+            cp -rvf "${{ inputs.files }}" "$CLONE_DIRECTORY"
+
+            cd "$CLONE_DIRECTORY"
+
+            # Create new branch
+            REMOTE_URL=https://$DESTINATION_OWNER:${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY
+            git remote set-url origin $REMOTE_URL
+            git fetch origin
+            BE=$(git ls-remote --heads origin ${{ inputs.target_branch }} | wc -l)
+            if [[ $BE == *"0"* ]]; then
+              echo "##### Target branch doesn't exist. Creating new branch #####"
+              git checkout -b ${{ inputs.target_branch }}
+            else
+              git checkout ${{ inputs.target_branch }}
+            fi
+            git add .
+            git status
+
+            # Won't commit if no changes were made
+            git diff-index --quiet HEAD || git commit --message "${{ inputs.commit_message }}"
+
+            echo
+            echo "##### Pushing git commit #####"
+            # --set-upstream: sets the branch when pushing to a branch that does not exist
+            git push -f -u origin "${{ inputs.target_branch }}"
+
+        else
+          echo
+          echo "WARNING: Couldn't read remote_repository URL input."
+          echo "ACCEPTED FORMAT:"
+          echo "git://github.com/<owner>/<repo>.git"
+          echo "or"
+          echo "git@github.com:<owner>/<repo>.git"
+          echo "or"
+          echo "https://github.com/<owner>/<repo>.git"
+          echo "or"
+          echo "https://github.com/<owner>/<repo>"
+          exit 1
+        fi
       shell: bash
 
 branding:

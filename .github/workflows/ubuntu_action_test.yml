@@ -37,14 +37,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
-      - run: date > reports/ubuntu_report_full.txt
+      - run: date > reports/ubuntu_report_full_remote.txt
       - uses: GuillaumeFalourd/git-commit-push@main
         with:
           email: ${{ github.actor }}[bot]@users.noreply.github.com
           name: ${{ github.actor }}
-          commit_message: ubuntu full workflow
+          commit_message: ubuntu full remote workflow
           target_branch: ubuntu
-          files: reports/ubuntu_report_full.txt
+          files: reports/ubuntu_report_full_remote.txt
           remote_repository: https://github.com/GuillaumeFalourd/poc-github-actions
           access_token: ${{ secrets.ACCESS_TOKEN }}
           force: true

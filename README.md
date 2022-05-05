@@ -47,6 +47,36 @@ _**Note**: This action is supported on **all runners** operating systems (`ubunt
           tags: true
 ```
 
+### Known Issue
+
+When pushing to the same repository, the workflow may return the following error using the action:
+
+```
+remote: Permission to <owner>/<repository>.git denied to github-actions[bot].
+fatal: unable to access 'https://github.com/<owner>/<repository>/': The requested URL returned error: 403
+```
+
+This can be resolved by adding `persist-credentials: false` and `fetch-depth: 0` to the workflow configurations when using the `actions/checkout`.
+
+```yaml
+     - uses: actions/checkout@v3
+       with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of the personal access token.
+          fetch-depth: 0  # otherwise, there would be errors pushing refs to the destination repository.
+     - uses: GuillaumeFalourd/git-commit-push@v1.3
+       with:
+          email: ${{ github.actor }}@users.noreply.github.com
+          name: ${{ github.actor }}
+          commit_message: your_message
+          target_branch: target_branch_name
+          files: file1 file2 directory1 directory2/file3
+          remote_repository: https://github.com/owner/another_repository
+          access_token: ${{ github.token }}
+          force: true
+          empty: true
+          tags: true
+```
+
 * * *
 
 ## ▶️ Action Inputs

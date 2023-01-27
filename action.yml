@@ -85,7 +85,7 @@ runs:
         git config --local user.email "${{ inputs.email }}"
         git config --local user.name "${{ inputs.name }}"
 
-        git fetch
+        git fetch origin
 
         if [[ `git status --porcelain` ]]; then
           git add ${{ inputs.files }} -v
@@ -96,7 +96,7 @@ runs:
           git merge git-commit-push-action-${{ github.run_id }}-${{ github.job }}
           git branch -d git-commit-push-action-${{ github.run_id }}-${{ github.job }}
 
-          git push "${{ inputs.remote_repository }}" "HEAD:$TARGET_BRANCH" --follow-tags $FORCE $TAGS        
+          git push "${{ inputs.remote_repository }}" "$CURRENT_BRANCH:$TARGET_BRANCH" --follow-tags $FORCE $TAGS        
         else
           echo "WARNING: No changes were detected. git commit push action aborted."
         fi

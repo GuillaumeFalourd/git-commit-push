@@ -85,6 +85,8 @@ runs:
         git config --local user.email "${{ inputs.email }}"
         git config --local user.name "${{ inputs.name }}"
 
+        git fetch
+
         if [[ `git status --porcelain` ]]; then
           git add ${{ inputs.files }} -v
           git commit -m "${{ inputs.commit_message }}" $EMPTY

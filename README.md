@@ -22,7 +22,7 @@ _**Note**: This action is supported on **all runners** operating systems (`ubunt
 
 ```yaml
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       # [...] --> steps with actions or commands updating repository files
       - uses: GuillaumeFalourd/git-commit-push@v1.3
 ```
@@ -31,7 +31,7 @@ _**Note**: This action is supported on **all runners** operating systems (`ubunt
 
 ```yaml
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       # [...] --> steps with actions or commands updating repository files
       - uses: GuillaumeFalourd/git-commit-push@v1.3
         with:
@@ -59,7 +59,7 @@ fatal: unable to access 'https://github.com/<owner>/<repository>/': The requeste
 This can be resolved by adding `persist-credentials: false` and `fetch-depth: 0` to the workflow configurations when using the `actions/checkout`.
 
 ```yaml
-     - uses: actions/checkout@v3
+     - uses: actions/checkout@v4
        with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of the personal access token.
           fetch-depth: 0  # otherwise, there would be errors pushing refs to the destination repository.
